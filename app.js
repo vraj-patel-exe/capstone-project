@@ -66,7 +66,7 @@ const sessionConfig = {
     name: 'session',
     secret,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
         // secure: true,
@@ -134,8 +134,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user; // req.user is user infomation in session that passport define for us
-    res.locals.success = req.flash('success'); // message when success is invoked in route handler
+    console.log('Current user:', req.user);
+    res.locals.currentUser = req.user; 
+    res.locals.success = req.flash('success'); 
     res.locals.error = req.flash('error');
     next();
 })
